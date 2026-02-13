@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/02/12 22:01:27 by belam            ###   ########.fr       */
+/*   Updated: 2026/02/13 18:49:08 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,24 @@
 #include "./libft/libft.h"
 #include "ft_printf.h"
 
+// rmb to free features->conv
 
-
-void check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags)
+const char *check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags, struct s_features *ptr_features)
 {	
 	if (*format_str == 'c')
 	{
-		ptr_features->conv = (unsigned char)va_arg(args, int);
-		format_str++;
+		ptr_features->conv = (char *)malloc(2);
+		ptr_features->conv[0] = (unsigned char)va_arg(args, int);
+		ptr_features->conv[1] = '\0';
 	}
 	else if (*format_str == 's')
 	{
 		ptr_features->conv = ft_strdup(va_arg(args, char *));
-		format_str++;
 	}
 	else if (*format_str == 'd')
 	{
 		int	num = va_arg(args, int);
+		//printf("va_arg: %d\n", num);
 		if (num < 0)
 			ptr_flags->neg_num = 1;
 		char	*conv1 = ft_itoa(num);
@@ -41,9 +42,8 @@ void check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags)
 		ptr_flags->conv_len = ft_strlen(conv2);
 		free(conv1);
 		//free(conv2); //otherwise cannot be used in print features
-			
-		format_str++;
 	}
+	return (++format_str);
 }
 
 
@@ -74,7 +74,7 @@ const char *check_flags_width(const char *format_str, struct s_flags *ptr_flags)
 			format_str++;
 	}
 
-	printf("%d, %d, %d, %d, %d\n", ptr_flags->align_left, ptr_flags->pad_zero, ptr_flags->sign_space, ptr_flags->sign_plus, ptr_flags->width);
+	//printf("%d, %d, %d, %d, %d\n", ptr_flags->align_left, ptr_flags->pad_zero, ptr_flags->sign_space, ptr_flags->sign_plus, ptr_flags->width);
 	
 	return(format_str);
 }
@@ -128,14 +128,25 @@ void print_features(struct s_features *ptr_features, char *conv)
 	}
 }
 
+void print_flags(struct s_flags *ptr_flags)
+{
+	printf("align_left:%d,\npad_zero:%d,\nsign_space:%d,\nsign_plus:%d,\nwidth:%d,\nneg_num:%d,\nconv_len:%d\n", ptr_flags->align_left, ptr_flags->pad_zero, ptr_flags->sign_space, ptr_flags->sign_plus, ptr_flags->width, ptr_flags->neg_num, ptr_flags->conv_len);
+}
+
+void print_features_struct(struct s_features *ptr_features)
+{
+	printf("pad_char:%c,\npad_left_count:%u,\npad_right_count:%u,\nsign_char:%s,\nconv:%s\n", ptr_features->pad_char, ptr_features->pad_left_count, ptr_features->pad_right_count, ptr_features->sign_char, ptr_features->conv);
+}
+
 void	ft_printf(const char *format_str, ...)
 {
 	va_list args;
 	va_start(args, format_str);
 	
 	struct s_flags		flags;
-	//struct s_features	features;
-	
+	struct s_features	features;
+	//features.pad_left_count = 0;	
+
 	while (*format_str != '\0')
 	{
 		if (*format_str == '%')
@@ -143,8 +154,12 @@ void	ft_printf(const char *format_str, ...)
 			format_str++;
 			format_str = check_flags_width(format_str, &flags);
 			printf("%s\n", format_str);
-			check_conv(format_str, args, &flags);
-			//flags_to_features(&flags, conv, &features);
+			format_str = check_conv(format_str, args, &flags, &features);
+			print_flags(&flags);
+			printf("%s\n", features.conv);
+			//print_features_struct(&features);
+			printf("%s\n", format_str);
+			flags_to_features(&flags, conv, &features);
 			//print_features();
 		}
 		else
@@ -169,7 +184,8 @@ int	main(int argc, char *argv[])
 		//printf("%s",ft_strtrim("12345", "-"));
 
 		//printf(format_str, arg);
-		ft_printf(argv[1], argv[2]);
+		if (argv[3][0] == 'd')
+			ft_printf(argv[1], atoi(argv[2]));
 	}
 	return (0);
 }
