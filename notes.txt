@@ -1,0 +1,1 @@
+1. typing "\n" as argument when running program in terminal passes the literals '\' and 'n' into the code, so need to manually check for escape sequences
