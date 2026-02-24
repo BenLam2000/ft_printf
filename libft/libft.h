@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:58:17 by belam             #+#    #+#             */
-/*   Updated: 2025/10/30 04:10:21 by belam            ###   ########.fr       */
+/*   Updated: 2026/02/23 16:12:16 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+// self-written
+char	*ft_itoa_base(int num, char *radix, int sign);
+char	*ft_itoa_base_64(long num, char *radix, int sign);
 
 #endif

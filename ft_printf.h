@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:19:32 by belam             #+#    #+#             */
-/*   Updated: 2026/02/12 19:01:53 by belam            ###   ########.fr       */
+/*   Updated: 2026/02/23 16:43:48 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ struct s_features
 	unsigned int	pad_left_count;
 	unsigned int	pad_right_count;
 	char			*sign_char;
+	char			*alt_form_prefix;
 	char			*conv;
 };
 
@@ -26,11 +27,14 @@ struct s_flags
 {
 	int	align_left;
 	int	pad_zero;
+	int alt_form;
 	int	sign_space;
 	int	sign_plus;
 	int	width;
 	int	neg_num;
 	int conv_len;
+	int	spec;
+	int	invalid_spec;
 };
 
 # endif 
