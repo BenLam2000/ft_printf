@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:58:17 by belam             #+#    #+#             */
-/*   Updated: 2026/02/23 16:12:16 by belam            ###   ########.fr       */
+/*   Updated: 2026/02/25 21:34:03 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
-// self-written
+// user-defined
 char	*ft_itoa_base(int num, char *radix, int sign);
 char	*ft_itoa_base_64(long num, char *radix, int sign);
+ssize_t	ft_putchar_fd_b(char c, int fd);
+ssize_t	ft_putstr_fd_b(char *s, int fd);
+int		ft_atoi_end(const char **nptr);
+int		ft_max(int num1, int num2);
 
 #endif
