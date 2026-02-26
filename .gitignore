@@ -2,3 +2,6 @@ ft_printf
 test
 notes.txt
 *.swp
+a.out
+*.o
+main.c

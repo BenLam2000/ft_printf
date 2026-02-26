@@ -6,12 +6,14 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:19:32 by belam             #+#    #+#             */
-/*   Updated: 2026/02/25 20:41:35 by belam            ###   ########.fr       */
+/*   Updated: 2026/02/26 15:36:56 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef FT_PRINTF_H
 #  define FT_PRINTF_H
+
+#include "./libft/libft.h"
 
 struct s_features
 {
@@ -38,5 +40,7 @@ struct s_flags
 	int	spec;
 	//int	invalid_spec;
 };
+
+int	ft_printf(const char *, ...);
 
 # endif 

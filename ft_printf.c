@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/02/26 03:37:14 by belam            ###   ########.fr       */
+/*   Updated: 2026/02/26 15:40:24 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 #include "ft_printf.h"
 
 // TODO:
-// ft_atoi_end
-// . flag
 // makefile
 // tester file
 // input type is not same as specifier
@@ -37,6 +35,8 @@
 // handle invalid specifiers/flags
 // flags in any order or combination
 // return value
+// ft_atoi_end
+// . flag
 
 // '/0' terminator is included in strchr check, so ft_strchr(anything, '\0') == true
 int	format_is_valid(const char *format_str)
@@ -277,7 +277,7 @@ int ft_printf(const char *format_str, ...)
 	return (bytes_written);
 }
 
-
+/*
 // for o,x,X: regardless of which base is set as input 0x, 0b, 0, decimal, compiler will autotranslate and stores as binary in RAM
 // cases: %z (invalid specifier)
 int	main(int argc, char *argv[])
@@ -305,4 +305,4 @@ int	main(int argc, char *argv[])
 		printf("%d" , format_is_valid(argv[1]));
 	}
 	return (0);
-}
+}*/
