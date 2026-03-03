@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/03/03 12:41:44 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/03 17:13:34 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void	check_flags_width(const char **format_str, struct s_flags *ptr_flags)
 		(*format_str)++;
 	}
 	if (ft_isdigit(**format_str))
+	{
 		ptr_flags->precision = ft_atoi_end(format_str);
+		ptr_flags->exp_prec = 1;
+	}
 }
 
 
@@ -133,6 +136,13 @@ void	check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags,
 	}
 	else if (ptr_flags->spec == '%')
 		ptr_features->conv = ft_strdup("%");
+
+	if (ft_strchr("pdiuxX", ptr_flags->spec) && !ft_strncmp(ptr_features->conv, "0", 10) && ptr_flags->precision == 0)
+	{
+		free(ptr_features->conv);
+		ptr_features->conv = ft_strdup("");
+	}
+	
 	ptr_flags->conv_len = ft_strlen(ptr_features->conv);
 }
 
