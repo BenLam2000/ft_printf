@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/02/26 15:40:24 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/03 12:41:44 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "ft_printf.h"
 
 // TODO:
-// makefile
 // tester file
 // input type is not same as specifier
 // number of arguments not matching format string
@@ -37,6 +36,7 @@
 // return value
 // ft_atoi_end
 // . flag
+// makefile
 
 // '/0' terminator is included in strchr check, so ft_strchr(anything, '\0') == true
 int	format_is_valid(const char *format_str)
@@ -176,6 +176,7 @@ void	flags_to_features(struct s_flags *ptr_flags, struct s_features *ptr_feature
 		else
 			ptr_features->pad_left_count = ptr_flags->width - fill_count;
 	}
+	ptr_features->prec_pad_count = 0;
 	if (ptr_flags->precision > ptr_flags->conv_len && ft_strchr("pdiuxX", ptr_flags->spec))
 		ptr_features->prec_pad_count = ptr_flags->precision - ptr_flags->conv_len;
 }
@@ -219,7 +220,7 @@ void	print_features(struct s_features *ptr_features, int *ptr_bytes_written)
 
 void print_s_flags(struct s_flags *ptr_flags)
 {
-	printf("align_left:%d,\npad_zero:%d,\nalt_form:%d,\nsign_space:%d,\nsign_plus:%d,\nwidth:%d,\nprecision:%d,\nneg_num:%d,\nspec:%c,\n", ptr_flags->align_left, ptr_flags->pad_zero, ptr_flags->alt_form, ptr_flags->sign_space, ptr_flags->sign_plus, ptr_flags->width, ptr_flags->precision, ptr_flags->neg_num, ptr_flags->spec);
+	printf("align_left:%d,\npad_zero:%d,\nalt_form:%d,\nsign_space:%d,\nsign_plus:%d,\nwidth:%d,\nprecision:%d,\nneg_num:%d,\nconv_len:%d,\nspec:%c,\n", ptr_flags->align_left, ptr_flags->pad_zero, ptr_flags->alt_form, ptr_flags->sign_space, ptr_flags->sign_plus, ptr_flags->width, ptr_flags->precision, ptr_flags->neg_num, ptr_flags->conv_len, ptr_flags->spec);
 }
 
 void print_s_features(struct s_features *ptr_features)
@@ -243,25 +244,28 @@ int ft_printf(const char *format_str, ...)
 			format_str++;
 			//printf("\n%s\n", format_str);
 			check_flags_width(&format_str, &flags);
+			
 			/*printf("\nafter check flags width\n");
 			print_s_flags(&flags);
 			printf("here");
-			printf("%s\n", format_str);*/
-
+			printf("%s\n", format_str);
+			*/
 		
 			check_conv(format_str, args, &flags, &features);
 			format_str++;
-			/*printf("\nafter check conv:\n");
+			/*
+			printf("\nafter check conv:\n");
 			print_s_flags(&flags);
 			printf("%s\n", features.conv);
-			printf("%s\n", format_str);*/
-
+			printf("%s\n", format_str);
+			*/
 			flags_to_features(&flags, &features);
-			/*printf("\nafter flags to features:\n");
+			/*
+			printf("\nafter flags to features:\n");
 			print_s_flags(&flags);
 			print_s_features(&features);
-			printf("%s\n", format_str);*/
-
+			printf("%s\n", format_str);
+			*/
 			//printf("\nfinal printf:\n\n");
 			print_features(&features, &bytes_written);
 			//printf("\n\n");
