@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:19:32 by belam             #+#    #+#             */
-/*   Updated: 2026/03/03 13:01:01 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/05 04:53:08 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ struct s_flags
 	int	neg_num;
 	int conv_len;
 	int	spec;
+	int is_zero;
 	//int	invalid_spec;
 };
 
