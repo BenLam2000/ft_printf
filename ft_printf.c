@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/03/05 05:11:10 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/06 04:14:47 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 #include "ft_printf.h"
 
 // TODO:
-// tester file
+// refactor to meet norm
 // input type is not same as specifier
 // number of arguments not matching format string
-// NULL input or ""
 // change structs to typedefs
 // move ft_itoa_base and 64 into root dir, remove declaration from libft/libft.h & libft/Makefile and add to ft_printf.h and Makefile
 // restructure folder to have src, incl, obj...
@@ -37,6 +36,8 @@
 // ft_atoi_end
 // . flag
 // makefile
+// tester file
+// check for NULL input or ""
 
 // '/0' terminator is included in strchr check, so ft_strchr(anything, '\0') == true
 int	format_is_valid(const char *format_str)
@@ -66,7 +67,7 @@ int	format_is_valid(const char *format_str)
 // traversing into ft_atoi_end, modifying the char * directly
 void	check_flags_width(const char **format_str, struct s_flags *ptr_flags)
 {
-	*ptr_flags = (struct s_flags){.precision = 1};
+	*ptr_flags = (struct s_flags){0};
 	while (ft_strchr("-0# +", **format_str))
 	{
 		if (**format_str == '-')
@@ -86,7 +87,6 @@ void	check_flags_width(const char **format_str, struct s_flags *ptr_flags)
 	if (**format_str == '.')
 	{
 		ptr_flags->exp_prec = 1;
-		ptr_flags->precision = 0;
 		(*format_str)++;
 	}
 	if (ft_isdigit(**format_str))
@@ -105,6 +105,7 @@ void	check_flags_width(const char **format_str, struct s_flags *ptr_flags)
 void	check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags, struct s_features *ptr_features)
 {
 	int num;
+	const char	*str;
 
 	ptr_flags->spec = *format_str;
 	if (ptr_flags->spec == 'c')
@@ -113,7 +114,23 @@ void	check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags,
 		ptr_features->conv[0] = (unsigned char)va_arg(args, int);
 	}
 	else if (ptr_flags->spec == 's')
-		ptr_features->conv = ft_strdup(va_arg(args, char *));
+	{
+		str = va_arg(args, const char *);
+		if (str == (char *)0)
+		{
+			if (ptr_flags->exp_prec && ptr_flags->precision < 6)
+				ptr_features->conv = ft_strdup("");
+			else
+				ptr_features->conv = ft_strdup("(null)");
+		}
+		else
+		{	
+			if (ptr_flags->exp_prec)
+				ptr_features->conv = ft_substr(str, 0, ptr_flags->precision);
+			else
+				ptr_features->conv = ft_strdup(str);
+		}
+	}
 	else if (ptr_flags->spec == 'p')
 		ptr_features->conv = ft_itoa_base_64((uintptr_t)va_arg(args, void *), "0123456789abcdef", 0);
 	else if (ptr_flags->spec == 'u')
@@ -153,7 +170,13 @@ void	check_conv(const char *format_str, va_list args, struct s_flags *ptr_flags,
 		}
 	}
 	
-	ptr_flags->conv_len = ft_strlen(ptr_features->conv);
+	if (ft_strchr("spdiuxX%", ptr_flags->spec))
+		ptr_flags->conv_len = ft_strlen(ptr_features->conv);
+	else if (ptr_flags->spec == 'c')
+		ptr_flags->conv_len = 1;
+
+	if (ft_strchr("pdiuxX", ptr_flags->spec) && !ptr_flags->exp_prec)
+		ptr_flags->precision = 1;
 }
 
 void	print_s_flags(struct s_flags *ptr_flags);
@@ -165,7 +188,7 @@ void	flags_to_features(struct s_flags *ptr_flags, struct s_features *ptr_feature
 	// *ptr_features = (struct s_features){.pad_char = ' ', .sign_char = "", .alt_form_prefix = "", };
 	ptr_features->pad_char = ' '; // default
 	if (ptr_flags->pad_zero && !ptr_flags->align_left && \
-		(ft_strchr("diuxX", ptr_flags->spec) || (ptr_flags->spec == 'p' && ptr_flags->is_zero)) && !ptr_flags->exp_prec)
+		(ft_strchr("diuxX", ptr_flags->spec) || (ptr_flags->spec == 'p' && !ptr_flags->is_zero)) && !ptr_flags->exp_prec)
 		ptr_features->pad_char = '0'; // override
 	ptr_features->sign_char = "";
 	if (ft_strchr("di", ptr_flags->spec) || (ptr_flags->spec == 'p' && ft_strncmp(ptr_features->conv, "(nil)", 20)))
@@ -202,7 +225,7 @@ void	flags_to_features(struct s_flags *ptr_flags, struct s_features *ptr_feature
 }
 
 
-void	print_features(struct s_features *ptr_features, int *ptr_bytes_written)
+void	print_features(struct s_flags *ptr_flags, struct s_features *ptr_features, int *ptr_bytes_written)
 {
 	unsigned int	count;
 	
@@ -228,7 +251,8 @@ void	print_features(struct s_features *ptr_features, int *ptr_bytes_written)
 		*ptr_bytes_written += ft_putchar_fd_b('0', 1);
 		count++;
 	}
-	*ptr_bytes_written += ft_putstr_fd_b(ptr_features->conv, 1);
+	ft_putstr_fd_b(ptr_features->conv, 1);
+	*ptr_bytes_written += ptr_flags->conv_len;
 	free(ptr_features->conv);
 	count = 0;
 	while (count < ptr_features->pad_right_count)
@@ -281,14 +305,14 @@ int ft_printf(const char *format_str, ...)
 			printf("%s\n", format_str);
 			*/
 			flags_to_features(&flags, &features);
-			/*			
+			/*
 			printf("\nafter flags to features:\n");
 			print_s_flags(&flags);
 			print_s_features(&features);
 			printf("%s\n", format_str);
 			*/
 			//printf("\nfinal printf:\n\n");
-			print_features(&features, &bytes_written);
+			print_features(&flags, &features, &bytes_written);
 			//printf("\n\n");
 		}
 		else
