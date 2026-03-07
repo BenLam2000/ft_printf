@@ -6,16 +6,11 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/03/06 04:14:47 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/07 19:19:55 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdint.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <limits.h>
-#include "./libft/libft.h"
+#include <stdio.h>  // only for printing results REMOVE THIS
 #include "ft_printf.h"
 
 // TODO:

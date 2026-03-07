@@ -6,14 +6,16 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:19:32 by belam             #+#    #+#             */
-/*   Updated: 2026/03/05 04:53:08 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/07 19:28:50 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef FT_PRINTF_H
-#  define FT_PRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-#include "./libft/libft.h"
+# include <stdint.h>
+# include <stdarg.h>
+# include "libft.h"
 
 struct s_features
 {
@@ -45,4 +47,12 @@ struct s_flags
 
 int	ft_printf(const char *, ...);
 
-# endif 
+// libft extra functions
+char	*ft_itoa_base(int num, char *radix, int sign);
+char	*ft_itoa_base_64(long num, char *radix, int sign);
+ssize_t	ft_putchar_fd_b(char c, int fd);
+ssize_t	ft_putstr_fd_b(char *s, int fd);
+int		ft_atoi_end(const char **nptr);
+int		ft_max(int num1, int num2);
+
+#endif 
