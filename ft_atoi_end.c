@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:31:33 by belam             #+#    #+#             */
-/*   Updated: 2026/02/25 21:10:01 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/07 23:13:57 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static int	ft_isspace(int c)
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }
 
+// function purpose:
+// converts ascii string to integer (allowing optional whitespaces and -+ sign before number)
+// additional feature: modifies string ptr directly, after complete ptr will be positioned after last digit of number
+// ex: "  -1234abcd"
+//		  	   ^
 // dep: ft_isspace, ft_isdigit
 // rules:
 // 1. arbitrary amount of whitespace

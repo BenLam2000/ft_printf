@@ -14,7 +14,7 @@
 
 // dep: malloc, ft_strlen
 // NOTE:
-// take care of unallocated memory
+// strdup assumes input is non-NULL
 char	*ft_strdup(const char *s)
 {
 	int		i;

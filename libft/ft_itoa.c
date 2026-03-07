@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:42:07 by belam             #+#    #+#             */
-/*   Updated: 2026/02/17 20:04:35 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/07 23:14:50 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*ft_itoa(int n)
 		return (a);
 	}
 	ft_itoa_malloc(n, &a, &num_len, &sign);
-	if (!(a))
+	if (!a)
 		return ((char *)0);
 	ft_itoa_seta(n, &a, &num_len, &sign);
 	return (a);

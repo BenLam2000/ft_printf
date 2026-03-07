@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:42:07 by belam             #+#    #+#             */
-/*   Updated: 2026/02/23 16:27:05 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/07 23:16:40 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char *ft_itoa_base_64(long num, char *radix, int sign)
 	{
 		num_len_max = num_len;
 		conv = (char *)malloc((neg_num + num_len_max + 1) * sizeof(char));
-		//if (conv == NULL)
-		//	return ((char *)0);
+		if (!conv)
+			return ((char *)0);
 		conv[neg_num + num_len_max] = '\0';
 		if (neg_num)
 			conv[0] = '-';
