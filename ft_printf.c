@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 05:09:31 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/08 20:01:27 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,62 @@ static void	handle_flags(const char **format_str, t_flags *ptr_flags)
 	}
 }
 
-static void	handle_width(const char **format_str, t_flags *ptr_flags)
+static void	handle_width(const char **format_str, t_flags *ptr_flags, va_list args)
 {
+	int	width;
+	
 	if (ft_isdigit(**format_str))
 		ptr_flags->width = ft_atoi_end(format_str);
+	else if (**format_str == '*')
+	{	
+		width = va_arg(args, int);
+		if (width < 0)
+		{
+			width = -width;
+			ptr_flags->align_left = 1;
+		}
+		ptr_flags->width = width;
+		(*format_str)++;
+	}
 }
 
-static void	handle_precision(const char **format_str, t_flags *ptr_flags)
-{
+static void	handle_precision(const char **format_str, t_flags *ptr_flags, va_list args)
+{	
+	int	prec;
+
 	if (**format_str == '.')
 	{
 		ptr_flags->exp_prec = 1;
 		(*format_str)++;
+		if (ft_isdigit(**format_str))
+		{
+			prec = ft_atoi_end(format_str);
+			if (prec > 0)
+				ptr_flags->precision = prec;
+		}
+		else if (**format_str == '*')
+		{
+			prec = va_arg(args, int);
+			if (prec < 0)
+				ptr_flags->exp_prec = 0;
+			else
+				ptr_flags->precision = prec;
+			(*format_str)++;
+		}
 	}
-	if (ft_isdigit(**format_str))
-		ptr_flags->precision = ft_atoi_end(format_str);
 	ptr_flags->spec = **format_str;
 	if (ft_strchr("pdiuxX", ptr_flags->spec) && !ptr_flags->exp_prec)
 		ptr_flags->precision = 1;
 }
 
+void	handle_conv(va_list args, t_flags *ptr_flags, t_features *ptr_features);
 void	get_flags(const char **format_str, t_flags *p_flags,
 	t_features *p_features, va_list args)
 {
 	(*format_str)++;
 	handle_flags(format_str, p_flags);
-	handle_width(format_str, p_flags);
-	handle_precision(format_str, p_flags);
+	handle_width(format_str, p_flags, args);
+	handle_precision(format_str, p_flags, args);
 	handle_conv(args, p_flags, p_features);
 	(*format_str)++;
 }
@@ -378,12 +407,24 @@ static int	format_is_valid(const char *format_str)
 {
 	while (ft_strchr("-0# +", *format_str) && *format_str)
 		format_str++;
-	while (ft_isdigit(*format_str))
+	if (ft_isdigit(*format_str))
+	{
+		while (ft_isdigit(*format_str))
+			format_str++;
+	}
+	else if (*format_str == '*')	
 		format_str++;
 	if (*format_str == '.')
+	{
 		format_str++;
-	while (ft_isdigit(*format_str))
-		format_str++;
+		if (ft_isdigit(*format_str))
+		{
+			while (ft_isdigit(*format_str))
+				format_str++;
+		}
+		else if (*format_str == '*')
+			format_str++;
+	}
 	if (ft_strchr(SPECS, *format_str) && *format_str)
 		return (1);
 	return (0);
