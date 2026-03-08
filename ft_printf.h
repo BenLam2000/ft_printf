@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:19:32 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 04:08:20 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/08 23:54:17 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define RADIX_X "0123456789abcdef"
 # define RADIX_XX "0123456789ABCDEF"
 
+// structs
 typedef struct
 {
 	int	align_left;
@@ -47,7 +48,14 @@ typedef struct
 	char			*conv;
 }t_features;
 
-int	ft_printf(const char *, ...);
+// ft_printf and helper functions
+int		ft_printf(const char *, ...);
+void	ft_get_flags(const char **format_str, t_flags *p_flags,
+	t_features *p_features, va_list args);
+void	ft_handle_conv(va_list args, t_flags *p_flags, t_features *p_features);
+void	ft_flags_to_features(t_flags *p_flags, t_features *p_features);
+void	ft_print_features(t_flags *p_flags, t_features *p_features,
+	int *p_bytes);
 
 // libft extra functions
 char	*ft_itoa_base(int num, char *radix, int sign);
