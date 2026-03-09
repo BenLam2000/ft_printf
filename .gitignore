@@ -1,16 +1,2 @@
-# 1. Ignore everything (whitelist approach)
-*
-
-# 2. But not directories (otherwise you cannot enter subfolders)
-!*/
-
-# 3. Unignore specific file types
-!*.h
-!*/*.h
-!*.c
-!*/*.c
-
-# 4. Optional: Unignore specific files or folders
-!Makefile
-!README.md
-!libft/
+extra/
+test/
