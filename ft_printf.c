@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 22:56:55 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 23:54:36 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/09 16:14:43 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 // number of arguments not matching format string
 // restructure folder to have src, incl, obj...
 // README
-// .gitignore all unused files for submission + make a standard reusable .gitignore template
+// .gitignore all unused files for submission + 
+//  make a standard reusable .gitignore template
 
-// future: variadic function that can be reusable to build things like atoi and format_is_valid, for any number of sets of characters, each with a set count or unlimited/optional
-
+// future: variadic function that can be reusable to build things like atoi
+//  and format_is_valid, for any number of sets of characters,
+//  each with a set count or unlimited/optional
 
 // DONE:
 // check for correct format before conversion to prevent segmentation fault
@@ -34,22 +36,14 @@
 // tester file
 // check for NULL input or ""
 // change structs to typedefs
-// move ft_itoa_base and 64 into root dir, remove declaration from libft/libft.h & libft/Makefile and add to ft_printf.h and Makefile
+// move ft_itoa_base and 64 into root dir, remove declaration from 
+//  libft/libft.h & libft/Makefile and add to ft_printf.h and Makefile
 // replace const strings with macros (radix)
 // readd NULL malloc checking in ft_itoa_base and 64
 
 /////////////////////////////////////
 
-
-// if specifier is invalid, print % until before specifier
-// ex: % -2.2z -> print: % -2.2
-// this function sets:
-// p_flags->neg_num
-// p_flags->conv_len
-// p_features->conv
-
-
-// '/0' terminator is included in strchr check, so ft_strchr(anything, '\0') == true
+// '/0' incl. in strchr check, so ft_strchr(any string, '\0') == true
 static int	format_is_valid(const char *format_str)
 {
 	while (ft_strchr("-0# +", *format_str) && *format_str)
@@ -59,7 +53,7 @@ static int	format_is_valid(const char *format_str)
 		while (ft_isdigit(*format_str))
 			format_str++;
 	}
-	else if (*format_str == '*')	
+	else if (*format_str == '*')
 		format_str++;
 	if (*format_str == '.')
 	{
@@ -88,7 +82,7 @@ static void	set_defaults(t_flags *p_flags, t_features *p_features)
 		.sign_char = "",
 		.alt_form_prefix = "",
 		.conv = ""
-		};
+	};
 }
 
 int	ft_printf(const char *format_str, ...)
@@ -98,7 +92,7 @@ int	ft_printf(const char *format_str, ...)
 	t_flags		flags;
 	t_features	features;
 
-	va_start(args, format_str);	
+	va_start(args, format_str);
 	bytes_written = 0;
 	while (*format_str)
 	{

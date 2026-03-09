@@ -6,14 +6,15 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:34:11 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 23:35:00 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/09 00:24:06 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-// NULL handled in here because ft_strdup(NULL) causes seg fault (accessing NULL ptr)
-static void	handle_s_conv(t_flags *p_flags, t_features *p_features, va_list args)
+// NULL handled here-> ft_strdup(NULL) causes seg fault (accessing NULL ptr)
+static void	handle_s_conv(t_flags *p_flags, t_features *p_features,
+	va_list args)
 {
 	const char	*str;
 
@@ -34,10 +35,11 @@ static void	handle_s_conv(t_flags *p_flags, t_features *p_features, va_list args
 	}
 }
 
-static void	handle_di_conv(t_flags *p_flags, t_features *p_features, va_list args)
-{		
+static void	handle_di_conv(t_flags *p_flags, t_features *p_features,
+	va_list args)
+{
 	int	num;
-	
+
 	num = va_arg(args, int);
 	if (num < 0)
 	{
@@ -73,7 +75,7 @@ static void	set_conv_len(t_flags *p_flags, t_features *p_features)
 		p_flags->conv_len = 1;
 }
 
-// ft_itoa_base takes num as int (32 bit), but uintptr_t is 64 bit, so it gets truncated
+// ft_itoa_base takes int (32 bit), but void * is 64 bit, so it gets truncated
 void	ft_handle_conv(va_list args, t_flags *p_flags, t_features *p_features)
 {
 	if (p_flags->spec == 'c')
@@ -85,7 +87,7 @@ void	ft_handle_conv(va_list args, t_flags *p_flags, t_features *p_features)
 		handle_s_conv(p_flags, p_features, args);
 	else if (p_flags->spec == 'p')
 		p_features->conv = ft_itoa_base_64((uintptr_t)va_arg(args, void *),
-		RADIX_X, 0);
+				RADIX_X, 0);
 	else if (p_flags->spec == 'd' || p_flags->spec == 'i')
 		handle_di_conv(p_flags, p_features, args);
 	else if (p_flags->spec == 'u')
@@ -93,7 +95,8 @@ void	ft_handle_conv(va_list args, t_flags *p_flags, t_features *p_features)
 	else if (p_flags->spec == 'x')
 		p_features->conv = ft_itoa_base(va_arg(args, unsigned int), RADIX_X, 0);
 	else if (p_flags->spec == 'X')
-		p_features->conv = ft_itoa_base(va_arg(args, unsigned int), RADIX_XX, 0);
+		p_features->conv = ft_itoa_base(va_arg(args, unsigned int),
+				RADIX_XX, 0);
 	else if (p_flags->spec == '%')
 		p_features->conv = ft_strdup("%");
 	handle_zero_conv(p_flags, p_features);

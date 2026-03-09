@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:32:25 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 23:33:35 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/09 00:19:51 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,17 @@ static void	handle_flags(const char **format_str, t_flags *p_flags)
 	}
 }
 
-// ft_atoi only returns int, but have to traverse manually after that, so integrate
+// ft_atoi returns int, but have to traverse manually after that, so integrate
 // traversing into ft_atoi_end, modifying the char * directly
-static void	handle_width(const char **format_str, t_flags *p_flags, va_list args)
+static void	handle_width(const char **format_str, t_flags *p_flags,
+	va_list args)
 {
 	int	width;
-	
+
 	if (ft_isdigit(**format_str))
 		p_flags->width = ft_atoi_end(format_str);
 	else if (**format_str == '*')
-	{	
+	{
 		width = va_arg(args, int);
 		if (width < 0)
 		{
@@ -54,8 +55,8 @@ static void	handle_width(const char **format_str, t_flags *p_flags, va_list args
 	}
 }
 
-static void	handle_precision(const char **format_str, t_flags *p_flags, va_list args)
-{	
+static void	handle_prec(const char **format_str, t_flags *p_flags, va_list args)
+{
 	int	prec;
 
 	if (**format_str == '.')
@@ -89,7 +90,7 @@ void	ft_get_flags(const char **format_str, t_flags *p_flags,
 	(*format_str)++;
 	handle_flags(format_str, p_flags);
 	handle_width(format_str, p_flags, args);
-	handle_precision(format_str, p_flags, args);
+	handle_prec(format_str, p_flags, args);
 	ft_handle_conv(args, p_flags, p_features);
 	(*format_str)++;
 }

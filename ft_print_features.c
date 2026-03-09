@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:38:21 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 23:54:01 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/09 16:15:13 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	print_pad(unsigned int pad_count, char pad_char, int *p_bytes)
 	}
 	*p_bytes += pad_count;
 }
-
 
 static void	print_sign_alt(t_features *p_features, char pad_char, int *p_bytes)
 {

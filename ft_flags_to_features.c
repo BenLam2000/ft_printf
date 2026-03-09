@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 23:35:35 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 23:37:55 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/09 00:17:12 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	handle_padchar_sign(t_flags *p_flags, t_features *p_features)
 {
-	if (p_flags->pad_zero && !p_flags->align_left 
+	if (p_flags->pad_zero && !p_flags->align_left
 		&& (ft_strchr("diuxX", p_flags->spec) || (p_flags->spec == 'p'
-		&& !p_flags->is_zero)) && !p_flags->exp_prec)
+				&& !p_flags->is_zero)) && !p_flags->exp_prec)
 		p_features->pad_char = '0';
-	if (ft_strchr("di", p_flags->spec) || (p_flags->spec == 'p' \
-		&& ft_strncmp(p_features->conv, "(nil)", 20)))
+	if (ft_strchr("di", p_flags->spec) || (p_flags->spec == 'p'
+			&& ft_strncmp(p_features->conv, "(nil)", 20)))
 	{
 		if (p_flags->neg_num)
 			p_features->sign_char = "-";
@@ -44,7 +44,7 @@ static void	handle_alt(t_flags *p_flags, t_features *p_features)
 
 static void	handle_padding(t_flags *p_flags, t_features *p_features)
 {
-	int fill_count;
+	int	fill_count;
 
 	fill_count = ft_strlen(p_features->sign_char)
 		+ ft_strlen(p_features->alt_form_prefix)
@@ -61,8 +61,8 @@ static void	handle_padding(t_flags *p_flags, t_features *p_features)
 static void	handle_prec(t_flags *p_flags, t_features *p_features)
 {
 	if (p_flags->precision > p_flags->conv_len
-		&& (ft_strchr("diuxX", p_flags->spec) ||
-		(p_flags->spec == 'p'&& !p_flags->is_zero)))
+		&& (ft_strchr("diuxX", p_flags->spec)
+			|| (p_flags->spec == 'p' && !p_flags->is_zero)))
 		p_features->prec_pad_count = p_flags->precision - p_flags->conv_len;
 }
 

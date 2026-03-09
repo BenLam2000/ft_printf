@@ -6,7 +6,7 @@
 /*   By: belam <belam@student.42iskandarputeri.edu  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:19:32 by belam             #+#    #+#             */
-/*   Updated: 2026/03/08 23:54:17 by belam            ###   ########.fr       */
+/*   Updated: 2026/03/09 16:24:06 by belam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@
 # define RADIX_XX "0123456789ABCDEF"
 
 // structs
-typedef struct
+typedef struct s_flags
 {
 	int	align_left;
 	int	pad_zero;
-	int alt_form;
+	int	alt_form;
 	int	sign_space;
 	int	sign_plus;
 	int	width;
-	int precision;
+	int	precision;
 	int	exp_prec;
 	int	neg_num;
-	int conv_len;
+	int	conv_len;
 	int	spec;
-	int is_zero;
-}t_flags;
+	int	is_zero;
+}	t_flags;
 
-typedef struct
+typedef struct s_features
 {
 	char			pad_char;
 	unsigned int	pad_left_count;
@@ -46,16 +46,16 @@ typedef struct
 	char			*sign_char;
 	char			*alt_form_prefix;
 	char			*conv;
-}t_features;
+}	t_features;
 
 // ft_printf and helper functions
-int		ft_printf(const char *, ...);
+int		ft_printf(const char *format_str, ...);
 void	ft_get_flags(const char **format_str, t_flags *p_flags,
-	t_features *p_features, va_list args);
+			t_features *p_features, va_list args);
 void	ft_handle_conv(va_list args, t_flags *p_flags, t_features *p_features);
 void	ft_flags_to_features(t_flags *p_flags, t_features *p_features);
 void	ft_print_features(t_flags *p_flags, t_features *p_features,
-	int *p_bytes);
+			int *p_bytes);
 
 // libft extra functions
 char	*ft_itoa_base(int num, char *radix, int sign);
