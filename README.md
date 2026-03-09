@@ -1,3 +1,17 @@
+what this project does
+what it handles (mandatory + bonus (which flags?))
+how the code works (high-level overview)
+how build works
+how did you do testing, show link to subject file
+what did you learn from this project?
+nuances that I discovered along the way
+- printf: invalid format does not work on first level function call, but does work in nested function calls
+- testing escape sequences does not work in terminal, because that is run using program after compile, test cases (including escape sequences) should be in source file and compiled, arguments on terminal treated as literals
+reasoning behind why extra functions were built
+- ft_itoa_base_64: pointer is 64 bit, so (unsigned int) in normal ft_itoa_base does not work, will be truncated, hence use long
+future improvements
+
+
 # Makefile
 1. `make -C libft re` clean all .o and .a files and build libft.a from scratch
 2. `cc -Wall -Wextra -Werror -c *.c -o *.o` compile all source files into object files without linking (with headers included)
