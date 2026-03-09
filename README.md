@@ -1,7 +1,18 @@
 what this project does
-what it handles (mandatory + bonus (which flags?))
+
+
+Feature List:
+what features it handles (mandatory + bonus (which flags?))
+
+Technical Choices:
 how the code works (high-level overview)
+why I split into stages
+data strcutures used (struct)
+
+
+
 how build works
+how to run it (how to compile/make and how to use the library)
 how did you do testing, show link to subject file
 what did you learn from this project?
 nuances that I discovered along the way
@@ -10,6 +21,13 @@ nuances that I discovered along the way
 reasoning behind why extra functions were built
 - ft_itoa_base_64: pointer is 64 bit, so (unsigned int) in normal ft_itoa_base does not work, will be truncated, hence use long
 future improvements
+
+Resources
+- man 3 pintf
+AI use
+- only in Makefile for tester, stuck with some syntax
+
+example usage:
 
 
 # Makefile
