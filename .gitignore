@@ -1,7 +1,16 @@
-ft_printf
-test
-notes.txt
-*.swp
-a.out
-*.o
-main.c
+# 1. Ignore everything (whitelist approach)
+*
+
+# 2. But not directories (otherwise you cannot enter subfolders)
+!*/
+
+# 3. Unignore specific file types
+!*.h
+!*/*.h
+!*.c
+!*/*.c
+
+# 4. Optional: Unignore specific files or folders
+!Makefile
+!README.md
+!libft/
