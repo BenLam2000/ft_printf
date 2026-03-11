@@ -19,7 +19,7 @@ nuances that I discovered along the way
 - printf: invalid format does not work on first level function call, but does work in nested function calls
 - testing escape sequences does not work in terminal, because that is run using program after compile, test cases (including escape sequences) should be in source file and compiled, arguments on terminal treated as literals
 reasoning behind why extra functions were built
-- ft_itoa_base_64: pointer is 64 bit, so (unsigned int) in normal ft_itoa_base does not work, will be truncated, hence use long
+- ft_itoa_base_64: pointer is 64 bit, but ft_itoa_base takes input as integer, will be truncated, hence use long
 future improvements
 
 Resources
